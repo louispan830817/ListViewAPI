@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -43,6 +47,7 @@ public class activity_deatil extends AppCompatActivity {
     private TextView Textlink;
     private TextView Textbio;
     private ImageView imageView;
+    private ImageView closeimage;
     static String avatar_url;
     String username;
     String name;
@@ -54,8 +59,10 @@ public class activity_deatil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//disable top bar
         setContentView(R.layout.activity_deatil);
         imageView = (ImageView) findViewById(R.id.imageView);
+        closeimage = (ImageView) findViewById(R.id.closeimage);
         Intent intent = this.getIntent();
         username = intent.getStringExtra("username");
         Log.d(TAG,"username:" + username);
@@ -90,7 +97,13 @@ public class activity_deatil extends AppCompatActivity {
                 });
             }
         });
-
+        closeimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, MainActivity.class);
+                mContext.startActivity(i);
+            }
+        });
 
     }
     private void parseJSON(String json) {//get json
