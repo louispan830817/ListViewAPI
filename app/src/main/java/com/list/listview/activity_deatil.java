@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class activity_deatil extends AppCompatActivity {
     private TextView Textbio;
     private ImageView imageView;
     static String avatar_url;
+    String username;
     String name;
     String bio;
     String login;
@@ -54,9 +56,12 @@ public class activity_deatil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deatil);
         imageView = (ImageView) findViewById(R.id.imageView);
+        Intent intent = this.getIntent();
+        username = intent.getStringExtra("username");
+        Log.d(TAG,"username:" + username);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.github.com/users/mojombo")//example
+                .url("https://api.github.com/users/" + username)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

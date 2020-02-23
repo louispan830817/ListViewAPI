@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.github.com/users?since=135")
+                .url("https://api.github.com/users")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -86,12 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        new Thread(new Runnable() {//run download image
-            @Override
-            public void run() {
-
-            }
-        }).start();
     }
     private void parseJSON(String json) {//get json
         notificationNumbers = new ArrayList<>();
@@ -122,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull NotificationHolder holder, int position) {
-            NotificationNumber notification = notificationNumbers.get(position);
+            final NotificationNumber notification = notificationNumbers.get(position);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     i = new Intent(mContext, activity_deatil.class);
-                    //i.putExtra("sys_id",);
+                    i.putExtra("username",String.valueOf(notification.getLogin()));
                     mContext.startActivity(i);
                 }
             });
