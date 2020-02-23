@@ -6,9 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -16,6 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +41,8 @@ public class activity_deatil extends AppCompatActivity {
     private TextView Textlocation;
     private TextView Textlink;
     private TextView Textbio;
-    String avatar_url;
+    private ImageView imageView;
+    static String avatar_url;
     String name;
     String bio;
     String login;
@@ -46,6 +53,7 @@ public class activity_deatil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deatil);
+        imageView = (ImageView) findViewById(R.id.imageView);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.github.com/users/mojombo")//example
@@ -78,6 +86,7 @@ public class activity_deatil extends AppCompatActivity {
             }
         });
 
+
     }
     private void parseJSON(String json) {//get json
         //notificationNumbers = new ArrayList<>();
@@ -106,10 +115,21 @@ public class activity_deatil extends AppCompatActivity {
             if(bio != "null") {
                 Textbio.setText(bio);
             }
+            Picasso.get().load(avatar_url).into(imageView);
+            //LoadImageFromWebOperations(avatar_url);
             } catch (JSONException ex) {
             ex.printStackTrace();
         }
-        Log.d(TAG,"avatar_url:" + avatar_url);
+        Log.d(TAG,"bio:" + bio);
+    }
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, avatar_url);
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

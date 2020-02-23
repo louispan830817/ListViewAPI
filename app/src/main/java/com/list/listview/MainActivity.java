@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemCount() {
+        public int getItemCount() {//get list size
             return notificationNumbers.size();
         }
 
@@ -149,27 +151,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void bindTo(NotificationNumber notification) {
-                image.setImageDrawable(Drawable.createFromPath(notification.getAvatar_url()));
+                //image.setImageDrawable(Drawable.createFromPath(notification.getAvatar_url()));
                 name.setText(String.valueOf(notification.getLogin()));
                 if(!notification.getSite_admin().equals("false")) {
                     status.setText("  STAFF  ");
                 }
+                Picasso.get().load(notification.getAvatar_url()).into(image);//get images url
             }
         }
-    }
-    public static Bitmap getBitmapFromURL(String src){//get url image
-        try{
-            URL url = new URL(src);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.connect();
-            InputStream input = conn.getInputStream();
-            Bitmap mBitmap = BitmapFactory.decodeStream(input);
-            return mBitmap;
-        }catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
-
     }
 
 }
