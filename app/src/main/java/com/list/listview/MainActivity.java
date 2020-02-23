@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();//disable top bar
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
@@ -145,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void bindTo(NotificationNumber notification) {
-                //image.setImageDrawable(Drawable.createFromPath(notification.getAvatar_url()));
                 name.setText(String.valueOf(notification.getLogin()));
                 if(!notification.getSite_admin().equals("false")) {
                     status.setText("  STAFF  ");

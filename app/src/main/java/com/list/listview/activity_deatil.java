@@ -59,7 +59,7 @@ public class activity_deatil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//disable top bar
+        getSupportActionBar().hide();//disable top bar
         setContentView(R.layout.activity_deatil);
         imageView = (ImageView) findViewById(R.id.imageView);
         closeimage = (ImageView) findViewById(R.id.closeimage);
